@@ -2,10 +2,13 @@ package com.example.kyrsovaya2;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText passwd = register_window.findViewById(R.id.password_field);
         final EditText login = register_window.findViewById(R.id.login_field);
 
+        //Кнопка выхода из меню регистрации
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -60,9 +64,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Тестовая кнопка, вывести таблицы пользователей
+        dialog.setNeutralButton("Show BD", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                ContentValues contentValues = new ContentValues();
+
+                Cursor cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                if (cursor.moveToFirst()) {
+                    int emailIndex = cursor.getColumnIndex(DBHelper.KEY_EMAIL);
+                    int loginIndex = cursor.getColumnIndex(DBHelper.KEY_LOGIN);
+                    int passwordIndex = cursor.getColumnIndex(DBHelper.KEY_PASSWD);
+                    do {
+                        Log.d("mLog", "login = " + cursor.getString(loginIndex) +
+                                ", email = " + cursor.getString(emailIndex) +
+                                ", password = " + cursor.getString(passwordIndex));
+                    } while (cursor.moveToNext());
+                } else
+                    Log.d("mLog","0 rows");
+
+                cursor.close();
+            }
+        });
+
+        //Кнопка подтверждения регистрации
         dialog.setPositiveButton("Sing up", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                ContentValues contentValues = new ContentValues();
+
                 if(TextUtils.isEmpty(email.getText().toString())) {
                     Snackbar.make(root, "Error: Enter your email", Snackbar.LENGTH_SHORT).show();
                     return;
@@ -75,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(root, "Error: Enter your password", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                contentValues.put(DBHelper.KEY_EMAIL, email.getText().toString());
+                contentValues.put(DBHelper.KEY_LOGIN, login.getText().toString());
+                contentValues.put(DBHelper.KEY_PASSWD, passwd.getText().toString());
+
+                database.insert(DBHelper.TABLE_CONTACTS, null, contentValues);
             }
         });
 
