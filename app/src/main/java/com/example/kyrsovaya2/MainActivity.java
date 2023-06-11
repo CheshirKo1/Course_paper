@@ -51,13 +51,14 @@ public class MainActivity extends AppCompatActivity {
                 passwd_text = findViewById(R.id.textEditPasswd);
                 int Tmp = check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString());
                 if (Tmp == 1) { Intent intent = new Intent(MainActivity.this, Profile.class);
-                    intent.putExtra("login", login_text.toString());
+
+                    intent.putExtra("login", login_text.getEditText().getText().toString());
                     startActivity(intent);
                 } else {
                     Snackbar.make(root, "Error: wrong login or password!", Snackbar.LENGTH_SHORT).show();
                 }
-                System.out.println(login_text.getEditText().getText().toString());
-                System.out.println(passwd_text.getEditText().getText().toString());
+                //System.out.println(login_text.getEditText().getText().toString());
+                //System.out.println(passwd_text.getEditText().getText().toString());
             }
         });
     }
