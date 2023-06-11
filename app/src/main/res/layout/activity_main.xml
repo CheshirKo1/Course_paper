@@ -34,7 +34,7 @@
             app:srcCompat="@drawable/logo1"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLogin"
+            android:id="@+id/textEditLogin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp">
@@ -49,7 +49,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textPasswd"
+            android:id="@+id/textEditPasswd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp">
