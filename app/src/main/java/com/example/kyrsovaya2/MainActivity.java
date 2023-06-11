@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 login_text = findViewById(R.id.textEditLogin);
                 passwd_text = findViewById(R.id.textEditPasswd);
-                //check_user(login_text.getText().toString(), passwd_text.getText().toString());
-                System.out.println(login_text);
-                System.out.println(passwd_text);
+                System.out.println(check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString()));
+                System.out.println(login_text.getEditText().getText().toString());
+                System.out.println(passwd_text.getEditText().getText().toString());
             }
         });
     }
@@ -64,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
             int loginIndex = cursor.getColumnIndex(DBHelper.KEY_LOGIN);
             int passwordIndex = cursor.getColumnIndex(DBHelper.KEY_PASSWD);
             do {
-                if ((log == cursor.getString(loginIndex)) & (pass == cursor.getString(passwordIndex))) {
+                //Поиск пользователя в бд
+                String name = cursor.getString(loginIndex);
+                String passwordDb = cursor.getString(passwordIndex);
+                if (log.equals(name) && pass.equals(passwordDb)) {
                     cursor.close();
                     return 1;
                 }
