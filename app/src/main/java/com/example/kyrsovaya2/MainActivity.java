@@ -17,27 +17,66 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import com.google.android.material.datepicker.MaterialTextInputPicker;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
 public class MainActivity extends AppCompatActivity {
     Button button_sing_up, button_sing_in;
     RelativeLayout root;
     DBHelper dbHelper;
+    TextInputLayout login_text;
+    TextInputLayout passwd_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button_sing_up = findViewById(R.id.button_sing_up);
         button_sing_in = findViewById(R.id.button_sing_in);
+        //EditText login_text;
+        //EditText passwd_text;
         root = findViewById(R.id.root_element);
         dbHelper = new DBHelper(this); //BD
+        //Реализация кнопки регистрации
         button_sing_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 show_register_window();
             }
         });
+        //Реализация кнопки входа
+        button_sing_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login_text = findViewById(R.id.textEditLogin);
+                passwd_text = findViewById(R.id.textEditPasswd);
+                //check_user(login_text.getText().toString(), passwd_text.getText().toString());
+                System.out.println(login_text);
+                System.out.println(passwd_text);
+            }
+        });
     }
+
+    private int check_user(String log, String pass) {
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        Cursor cursor = database.query(DBHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            int loginIndex = cursor.getColumnIndex(DBHelper.KEY_LOGIN);
+            int passwordIndex = cursor.getColumnIndex(DBHelper.KEY_PASSWD);
+            do {
+                if ((log == cursor.getString(loginIndex)) & (pass == cursor.getString(passwordIndex))) {
+                    cursor.close();
+                    return 1;
+                }
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("mLog","0 rows");
+            cursor.close();
+            return 0;
+            }
+        return 0;
+    }
+
     private void show_register_window() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Sing Up");
