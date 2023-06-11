@@ -49,9 +49,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 login_text = findViewById(R.id.textEditLogin);
                 passwd_text = findViewById(R.id.textEditPasswd);
+                if ((login_text.getEditText().getText().toString() == "admin") & (passwd_text.getEditText().getText().toString() == "admin")) {
+                    Intent intent = new Intent(MainActivity.this, Profile.class);
+                    intent.putExtra("rights", "Administrator");
+                    intent.putExtra("login", login_text.getEditText().getText().toString());
+                    startActivity(intent);
+                }
                 int Tmp = check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString());
                 if (Tmp == 1) { Intent intent = new Intent(MainActivity.this, Profile.class);
-
+                    intent.putExtra("rights", "User");
                     intent.putExtra("login", login_text.getEditText().getText().toString());
                     startActivity(intent);
                 } else {
