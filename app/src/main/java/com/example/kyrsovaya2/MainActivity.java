@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String administrator_login = "admin";
+    public static final String administrator_password = "admin123";
     Button button_sing_up, button_sing_in;
     RelativeLayout root;
     DBHelper dbHelper;
@@ -49,22 +51,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 login_text = findViewById(R.id.textEditLogin);
                 passwd_text = findViewById(R.id.textEditPasswd);
-                if ((login_text.getEditText().getText().toString() == "admin") & (passwd_text.getEditText().getText().toString() == "admin")) {
+                if ((login_text.getEditText().getText().toString()).equals(administrator_login)
+                        && (passwd_text.getEditText().getText().toString()).equals(administrator_password)) {
                     Intent intent = new Intent(MainActivity.this, Profile.class);
                     intent.putExtra("rights", "Administrator");
                     intent.putExtra("login", login_text.getEditText().getText().toString());
                     startActivity(intent);
-                }
-                int Tmp = check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString());
-                if (Tmp == 1) { Intent intent = new Intent(MainActivity.this, Profile.class);
-                    intent.putExtra("rights", "User");
-                    intent.putExtra("login", login_text.getEditText().getText().toString());
-                    startActivity(intent);
                 } else {
-                    Snackbar.make(root, "Error: wrong login or password!", Snackbar.LENGTH_SHORT).show();
+                    int Tmp = check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString());
+                    if (Tmp == 1) {
+                        Intent intent = new Intent(MainActivity.this, Profile.class);
+                        intent.putExtra("rights", "User");
+                        intent.putExtra("login", login_text.getEditText().getText().toString());
+                        startActivity(intent);
+                    } else {
+                        Snackbar.make(root, "Error: wrong login or password!", Snackbar.LENGTH_SHORT).show();
+                    }
                 }
-                //System.out.println(login_text.getEditText().getText().toString());
-                //System.out.println(passwd_text.getEditText().getText().toString());
             }
         });
     }
