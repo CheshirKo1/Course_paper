@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,10 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import com.google.android.material.datepicker.MaterialTextInputPicker;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.android.material.textview.MaterialTextView;
 
 public class MainActivity extends AppCompatActivity {
     Button button_sing_up, button_sing_in;
@@ -49,7 +49,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 login_text = findViewById(R.id.textEditLogin);
                 passwd_text = findViewById(R.id.textEditPasswd);
-                System.out.println(check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString()));
+                int Tmp = check_user(login_text.getEditText().getText().toString(), passwd_text.getEditText().getText().toString());
+                if (Tmp == 1) { Intent intent = new Intent(MainActivity.this, Profile.class);
+                    intent.putExtra("login", login_text.toString());
+                    startActivity(intent);
+                } else {
+                    Snackbar.make(root, "Error: wrong login or password!", Snackbar.LENGTH_SHORT).show();
+                }
                 System.out.println(login_text.getEditText().getText().toString());
                 System.out.println(passwd_text.getEditText().getText().toString());
             }
