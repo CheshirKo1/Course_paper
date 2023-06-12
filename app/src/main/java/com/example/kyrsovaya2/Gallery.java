@@ -23,14 +23,16 @@ public class Gallery extends Activity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.profile:
-                        Intent intent = new Intent(Gallery.this, Profile.class);
-                        startActivity(intent);
+                        Intent intentProf = new Intent(Gallery.this, Profile.class);
+                        startActivity(intentProf);
                         return true;
                     case R.id.add:
                         // Handle add selection
                         return true;
                     case R.id.find:
                         // Handle find selection
+                        Intent intentFind = new Intent(Gallery.this, FindActivity.class);
+                        startActivity(intentFind);
                         return true;
                     case R.id.gall_id:
                         // Handle gallery selection

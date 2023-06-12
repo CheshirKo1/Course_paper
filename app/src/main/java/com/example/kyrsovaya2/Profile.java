@@ -11,11 +11,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class Profile extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -60,6 +58,8 @@ public class Profile extends AppCompatActivity {
                         return true;
                     case R.id.find:
                         // Handle find selection
+                        Intent intentFind = new Intent(Profile.this, FindActivity.class);
+                        startActivity(intentFind);
                         return true;
                     case R.id.gall_id:
                         // Handle gallery selection
