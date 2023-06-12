@@ -51,5 +51,6 @@ public class Profile extends AppCompatActivity {
                 return false;
             }
         });
+        bottomNavigationView.setSelectedItemId(R.id.profile);
     }
 }

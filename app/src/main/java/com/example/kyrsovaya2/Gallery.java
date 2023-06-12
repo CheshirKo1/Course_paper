@@ -1,18 +1,45 @@
 package com.example.kyrsovaya2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-public class Gallery extends Activity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+public class Gallery extends Activity {
+    private BottomNavigationView bottomNavigationView;
     ImageView im;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.profile:
+                        Intent intent = new Intent(Gallery.this, Profile.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.add:
+                        // Handle add selection
+                        return true;
+                    case R.id.find:
+                        // Handle find selection
+                        return true;
+                    case R.id.gall_id:
+                        // Handle gallery selection
+                        return true;
+                }
+                return false;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.gall_id);
     }
 
 
