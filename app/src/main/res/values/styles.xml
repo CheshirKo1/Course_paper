@@ -11,4 +11,11 @@
         <item name="android:textColor">@color/baseRed</item>
     </style>
 
+    <style name="TextWithBlurShadowStyle">
+        <item name="android:shadowColor">@color/baseRed</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">10</item>
+    </style>
+
 </resources>
