@@ -75,10 +75,10 @@ public class Profile extends AppCompatActivity {
 
     private void database_window() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Sing Up");
+        dialog.setTitle("Registrations");
         dialog.setMessage("Enter data for registration");
         LayoutInflater inflater = LayoutInflater.from(this);
-        View database_window = inflater.inflate(R.layout.register_window, null);
+        View database_window = inflater.inflate(R.layout.database_window, null);
         dialog.setView(database_window);
 
         DBHelper dbHelper = new DBHelper(this);
@@ -91,9 +91,9 @@ public class Profile extends AppCompatActivity {
         // Перебор курсора и добавление значений столбцов к StringBuilder
         if (cursor.moveToFirst()) {
             do {
-                String email = cursor.getString(cursor.getColumnIndex("email"));
-                String passwd = cursor.getString(cursor.getColumnIndex("password"));
-                String login = cursor.getString(cursor.getColumnIndex("login"));
+                String email = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_EMAIL));
+                String passwd = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_PASSWD));
+                String login = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_LOGIN));
                 message.append("Email: ").append(email).append("\n");
                 message.append("Password: ").append(passwd).append("\n");
                 message.append("Login: ").append(login).append("\n\n");

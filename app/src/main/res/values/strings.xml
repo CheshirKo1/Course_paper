@@ -3,7 +3,7 @@
     <string name="kyrs_name">MIREAVideo</string>
     <string name="pass">Password:</string>
     <string name="log">Login:</string>
-    <string name="textBottom_Sing_In">Sing in</string>
-    <string name="textBottom_Sing_Up">Sing Up</string>
+    <string name="textBottom_Sing_In">Sign in</string>
+    <string name="textBottom_Sing_Up">Sign Up</string>
     <string name="text_Sing_In">For the first time on our service?</string>
 </resources>
