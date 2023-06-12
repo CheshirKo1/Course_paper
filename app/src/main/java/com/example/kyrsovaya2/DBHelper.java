@@ -1,6 +1,7 @@
 package com.example.kyrsovaya2;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -41,5 +42,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + TABLE_CONTACTS);
 
         onCreate(db);
+    }
+    public Cursor getAllData(String tableName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("TABLE_CONTACTS", null, null, null, null, null, null);
+        return cursor;
     }
 }

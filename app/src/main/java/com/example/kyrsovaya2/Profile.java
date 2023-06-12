@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class Profile extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
+    DBHelper dbHelper;
     private Button bottom_admin;
     private TextView usernameText;
     private TextView usernameRights;
@@ -77,17 +80,38 @@ public class Profile extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View database_window = inflater.inflate(R.layout.register_window, null);
         dialog.setView(database_window);
-        //final EditText email = register_window.findViewById(R.id.email_field);
-        //final EditText passwd = register_window.findViewById(R.id.password_field);
-        //final EditText login = register_window.findViewById(R.id.login_field);
 
-        //Кнопка выхода из меню регистрации
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // Получение всех записей из базы данных
+        Cursor cursor = dbHelper.getAllData(DBHelper.TABLE_CONTACTS);
+        // Создание StringBuilder для сохранения всех записей
+        StringBuilder message = new StringBuilder();
+
+        // Перебор курсора и добавление значений столбцов к StringBuilder
+        if (cursor.moveToFirst()) {
+            do {
+                String email = cursor.getString(cursor.getColumnIndex("email"));
+                String passwd = cursor.getString(cursor.getColumnIndex("password"));
+                String login = cursor.getString(cursor.getColumnIndex("login"));
+                message.append("Email: ").append(email).append("\n");
+                message.append("Password: ").append(passwd).append("\n");
+                message.append("Login: ").append(login).append("\n\n");
+            } while (cursor.moveToNext());
+        }
+
+        // Установка текста сообщения диалогового окна
+        dialog.setMessage(message.toString());
+
+        // Кнопка выхода из меню регистрации
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
+
         dialog.show();
     }
+
 }
